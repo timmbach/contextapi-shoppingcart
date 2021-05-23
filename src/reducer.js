@@ -33,8 +33,21 @@ const reducer = (state, action) => {
   }
 
   if (action.type === "GET_TOTALS") {
+    let { total, amount } = state.cart.reduce(
+      (cartTotal, cartItem) => {
+        const { price, amount } = cartItem;
+        let itemTotal = amount * price;
+        cartTotal.amount += amount;
+        cartTotal.total += itemTotal;
+        return cartTotal;
+      },
+      {
+        total: 0,
+        amount: 0,
+      }
+    );
 
-    const {total, amount} = state.cart.
+    total = parseFloat(total.toFixed(2));
 
     return { ...state, total, amount };
   }
